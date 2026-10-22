@@ -294,11 +294,152 @@ tr td.filled{background:#3b3b30!important;color:#ffeb70!important}
 #highscoreList{max-height:58dvh;overflow-y:auto;text-align:left;}
 #highscoreList>div{padding:8px 6px;border-bottom:1px solid #4a4a4a;overflow-wrap:anywhere;}
 #highscores .highscoreClose{position:absolute;right:5px;top:5px;padding:4px 10px;min-width:34px;}
+
+/* v48: Kreuzmarkierung nur bei offener Punkteauswahl, ohne Layoutänderung */
+#scoreTable tr.entryCrossRow > td {background:#14565d!important; color:#fff!important;}
+#scoreTable td.entryCrossColumn {background:#46502b!important;color:#fff!important;}
+#scoreTable tr.entryCrossRow > td.entryCrossColumn {background:#b78b19!important;color:#101010!important;box-shadow:inset 0 0 0 3px #ffe15b,0 0 0 1px #ffe15b!important;font-weight:900;}
+#scoreTable tr.entryCrossRow > td.section-title {box-shadow:inset 4px 0 #6cf1e7!important;}
+#scoreTable th.entryCrossHeader {box-shadow:inset 0 -3px #ffe15b!important;}
+
+/* v50: Zweifach vergrößerte Rubrik direkt im geöffneten Auswahlfenster.
+   Kein Einfluss auf die Tabellenhöhe; der Kopf bleibt beim Scrollen sichtbar. */
+#contextMenu .categoryZoomLabel{
+ position:sticky;top:0;z-index:2;box-sizing:border-box;
+ display:flex;flex-direction:column;align-items:center;gap:3px;
+ padding:10px 6px 9px;background:#173f46;border-bottom:2px solid #6cf1e7;
+ color:#fff;text-align:center;overflow-wrap:anywhere;
+}
+#contextMenu .categoryZoomLabel strong{font-size:clamp(24px,6.5vw,36px);line-height:1.1;font-weight:900;}
+#contextMenu .categoryZoomLabel span{font-size:13px;color:#d4f6ef;font-weight:700;}
+
+/* v52: Kategorie zusätzlich links auf ca. doppelte Schriftgröße zoomen.
+   Absolutes Overlay über Nachbarzeilen: keine Änderung der Tabellenmaße. */
+#scoreTable tr.entryCrossRow > td.entryZoomCategory{position:relative;z-index:110;overflow:visible!important;}
+#scoreTable tr.entryCrossRow > td.entryZoomCategory::after{
+ content:attr(data-zoom-label);position:absolute;left:0;top:50%;transform:translateY(-50%);
+ box-sizing:border-box;width:100%;min-height:66px;display:flex;align-items:center;justify-content:center;
+ padding:8px 5px;background:#07535c;border:2px solid #76fff1;border-left:5px solid #76fff1;
+ border-radius:0 9px 9px 0;box-shadow:0 5px 18px #000c;
+ color:white;font-size:clamp(20px,5.5vw,28px);font-weight:900;line-height:1.08;
+ text-align:center;overflow-wrap:anywhere;pointer-events:none;
+}
+
+/* v54: Eigene farbige Narrenkappe mit Glöckchen und übergroße Krone.
+   Absolut positioniert: keine zusätzliche Tabellenhöhe, keine neuen Zeilen. */
+#scoreTable .playerHead{position:relative;overflow:visible;}
+#scoreTable .liveRankIcon{position:absolute;right:0;top:-10px;z-index:12;pointer-events:none;display:flex;align-items:center;justify-content:center;font-size:16px;line-height:1;filter:drop-shadow(0 2px 2px #000);}
+#scoreTable .liveRankIcon.rank-crown{font-size:31px;right:-2px;top:-19px;filter:drop-shadow(0 0 5px #ffdc44) drop-shadow(0 2px 2px #000);}
+#scoreTable .liveRankIcon.rank-jester{width:45px;height:41px;right:-7px;top:-25px;filter:drop-shadow(0 0 5px #ff38b4) drop-shadow(0 2px 2px #000);transform:rotate(-10deg);}
+#scoreTable .liveRankIcon.rank-jester svg{width:100%;height:100%;overflow:visible;}
+@media(max-width:650px){#scoreTable .liveRankIcon.rank-crown{font-size:27px;top:-18px}#scoreTable .liveRankIcon.rank-jester{width:39px;height:36px;top:-23px}}
+
+/* v55: kompakter Kopf, ohne Eingriff in die Tabelle oder Spielmechanik */
+#appTop{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:3px 8px;padding:3px 6px 5px;box-sizing:border-box;position:relative;z-index:15}
+#appTop .appIdentity{display:flex;align-items:center;gap:6px;white-space:nowrap}
+#appTop h2{font-size:clamp(14px,1.6vw,19px);line-height:1.1;margin:0}
+#appTop #gameInfo{margin:0;font-size:11px}
+#appTop .modebar{margin:0;gap:3px;flex-wrap:nowrap}
+#appTop #controls{margin:0;padding:0;border:0;gap:3px;display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;min-width:0}
+#appTop button{margin:0;padding:5px 8px;font-size:12px;line-height:1.2;min-height:29px;white-space:nowrap}
+#appTop #playerCountLabel{font-size:12px;white-space:nowrap;padding:0 2px}
+#appTop #storageBar{flex-basis:100%;margin:0;max-width:none;line-height:1.1;min-height:13px}
+#appTop #storageStatus{margin:0;font-size:10px;line-height:1.1}
+#moreActions{position:relative;flex-shrink:0}
+#moreActions summary{display:flex;align-items:center;justify-content:center;list-style:none;cursor:pointer;user-select:none;border:1px solid #555;background:#222;border-radius:6px;padding:5px 8px;min-height:29px;box-sizing:border-box;font-size:12px;white-space:nowrap}
+#moreActions summary::-webkit-details-marker{display:none}
+#moreActions[open] summary{background:#3b3322;border-color:#ffb400}
+#moreActions .moreActionsPanel{position:absolute;right:0;top:calc(100% + 4px);min-width:170px;display:flex;flex-direction:column;gap:4px;background:#191919;border:1px solid #777;border-radius:8px;padding:7px;box-shadow:0 5px 18px #000;z-index:2500}
+#moreActions .moreActionsPanel button{text-align:left;min-height:36px}
+@media(min-width:1100px){#appTop{flex-wrap:nowrap}#appTop #storageBar{flex-basis:auto}#appTop #storageStatus{font-size:9px}}
+@media(max-width:650px){
+ #appTop{gap:2px 3px;padding:2px 2px 3px}
+ #appTop .appIdentity{display:none}
+ #appTop .modebar{flex:0 0 auto}
+ #appTop .modebar button{font-size:11px;padding:4px 5px;min-height:27px}
+ #appTop #controls{flex:1 1 auto;justify-content:center;gap:2px}
+ #appTop #controls button{font-size:11px;padding:4px 5px;min-height:27px}
+ #appTop #playerCountLabel{font-size:10px;padding:0 1px}
+ #appTop #storageBar{min-height:11px}
+ #appTop #storageStatus{font-size:9px}
+ #moreActions summary{font-size:11px;padding:4px 5px;min-height:27px}
+}
+@media(max-width:430px){
+ #appTop .modebar{width:100%;justify-content:center}
+ #appTop #controls{width:100%;flex:0 0 100%;justify-content:center}
+ #appTop #controls button{font-size:11px;padding:4px 6px}
+ #appTop #controls button:nth-of-type(7){font-size:0;padding:4px 6px}
+ #appTop #controls button:nth-of-type(7)::after{content:'🏆';font-size:14px}
+}
+/* v57: Spielername und kompletter Tabellenkopf sind Griffbereich, ohne Höhenänderung. */
+#scoreTable thead th:not(:first-child){cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;}
+#scoreTable thead th:not(:first-child).dragging{cursor:grabbing;}
+#scoreTable thead th .nameInput{user-select:text;-webkit-user-select:text;}
+#scoreTable .playerDragGrip{pointer-events:none;}
+
+/* v58: sichtbare mitbewegte komplette Spalte, keine zusätzliche Tabellenhöhe */
+#scoreTable thead th:not(:first-child){touch-action:none;cursor:grab;}
+#scoreTable .playerDragGrip{left:0;right:0;top:0;width:100%;height:100%;opacity:.16;justify-content:flex-start;padding-left:3px;box-sizing:border-box;pointer-events:none;}
+#scoreTable .columnDragSource{filter:brightness(1.35);box-shadow:inset 0 0 0 2px #70f5f0!important;}
+.columnDragGhost{position:fixed;z-index:9999;pointer-events:none;opacity:.91;filter:drop-shadow(0 4px 12px #000);transform-origin:top left;}
+.dragGhostTable{width:100%;border-collapse:collapse;table-layout:fixed;background:#244b4b;color:#fff;font-weight:800;text-align:center;}
+.dragGhostTable td{padding:0 2px;box-sizing:border-box;border:1px solid #82f5e5;overflow:hidden;white-space:nowrap;font-size:clamp(11px,2vw,17px);}
+.dragGhostTable .ghostHead{background:#f3b400;color:#151515;font-weight:900;}
+
+/* v59: der GESAMTE Kopf fängt Touch-Ereignisse ab, kein Textmarkieren mehr */
+#scoreTable thead th:not(:first-child),#scoreTable thead th:not(:first-child) *{
+ -webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important;
+}
+#scoreTable thead th .nameInput{
+ pointer-events:none!important;caret-color:transparent!important;
+ -webkit-user-select:none!important;user-select:none!important;
+}
+#scoreTable thead th:not(:first-child){touch-action:none!important;}
+#scoreTable thead th .playerDragGrip{pointer-events:none!important;}
+
+/* v60: Große Touch-Zone exakt im vorhandenen Fortschrittsstreifen */
+#scoreTable .playerHead .playerDragZone{
+ position:relative;z-index:10;min-height:19px;box-sizing:border-box;
+ display:flex;align-items:center;justify-content:center;
+ cursor:grab;touch-action:none!important;-webkit-user-select:none!important;
+ user-select:none!important;-webkit-touch-callout:none!important;
+ background:linear-gradient(90deg,#134b4a,#246c66)!important;
+ border:1px solid #65f1d7;border-radius:3px;color:#e9fffb!important;
+ font-weight:900!important;letter-spacing:.2px;
+}
+#scoreTable .playerHead .playerDragZone::before{content:'↔ ';font-size:1.2em;color:#fff8a6;white-space:pre;}
+#scoreTable .playerHead .playerDragZone:active{background:#ffbc28!important;color:#111!important;}
+#scoreTable .playerHead .playerDragZone:focus-visible{outline:2px solid #ffda62;}
+#scoreTable .playerHead .nameInput{pointer-events:auto!important;cursor:pointer;}
+
+/* v61: Speicherstatus neben Mehr statt unter den Knöpfen / hinter den Medaillen */
+#appTop #controls #storageBar{flex:0 1 auto;min-width:0;max-width:190px;min-height:0;margin:0 0 0 3px;padding:0;white-space:nowrap;overflow:hidden;align-self:center;line-height:1.15}
+#appTop #controls #storageStatus{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;font-weight:600;color:#8de3a0;margin:0}
+#appTop #controls #storageStatus.storageError{color:#ff8b8b}
+@media(max-width:850px){#appTop #controls #storageBar{max-width:95px;margin-left:1px}#appTop #controls #storageStatus{font-size:10px}}
+@media(max-width:430px){#appTop #controls #storageBar{max-width:57px}#appTop #controls #storageStatus{font-size:9px}}
 </style></head><body>
-<h2 id="appHeading">Kniffelblock Dual</h2><div id="gameInfo"></div>
-<div class="modebar"><button id="modeClassic" onclick="switchMode('classic')">🎲 Klassisch</button><button id="modeExtreme" onclick="switchMode('extreme')">🎲 Extrem</button></div>
-<div id="controls"><div style="width:100%"><button onclick="manualTurn(-1)">◀ Spieler</button><button onclick="manualTurn(1)">Spieler ▶</button><button onclick="changePlayers(-1)">− Spieler</button><span id="playerCountLabel"></span><button onclick="changePlayers(1)">+ Spieler</button><button onclick="endGame()">Spiel beenden</button><button onclick="resetGame()">Neues Spiel</button></div><div style="width:100%"><button onclick="toggleHighscores()">Highscores anzeigen</button><button onclick="resetHighscores()">Highscores löschen</button></div></div>
-<div id="storageBar"><button onclick="exportJSON()">💾 JSON sichern</button><button onclick="document.getElementById('importFile').click()">📂 JSON laden</button><input type="file" id="importFile" accept=".json,application/json" style="display:none" onchange="importJSON(event)"><span id="storageStatus">Automatische lokale Sicherung aktiv</span></div>
+<div id="appTop">
+  <div class="appIdentity"><h2 id="appHeading">Kniffelblock Dual</h2><div id="gameInfo"></div></div>
+  <div class="modebar"><button id="modeClassic" onclick="switchMode('classic')">🎲 Klassisch</button><button id="modeExtreme" onclick="switchMode('extreme')">🎲 Extrem</button></div>
+  <div id="controls">
+    <button title="Vorheriger Spieler" aria-label="Vorheriger Spieler" onclick="manualTurn(-1)">◀</button>
+    <button title="Nächster Spieler" aria-label="Nächster Spieler" onclick="manualTurn(1)">▶</button>
+    <button title="Spieler entfernen" aria-label="Spieler entfernen" onclick="changePlayers(-1)">−</button>
+    <span id="playerCountLabel"></span>
+    <button title="Spieler hinzufügen" aria-label="Spieler hinzufügen" onclick="changePlayers(1)">+</button>
+    <button onclick="endGame()">Beenden</button>
+    <button onclick="resetGame()">Neues Spiel</button>
+    <button onclick="toggleHighscores()">🏆 Highscores</button>
+    <details id="moreActions"><summary aria-label="Weitere Funktionen">⋯ Mehr</summary><div class="moreActionsPanel">
+      <button onclick="resetHighscores();document.getElementById('moreActions').open=false">Highscores löschen</button>
+      <button onclick="exportJSON();document.getElementById('moreActions').open=false">💾 JSON sichern</button>
+      <button onclick="document.getElementById('importFile').click();document.getElementById('moreActions').open=false">📂 JSON laden</button>
+    </div></details>
+    <div id="storageBar" aria-live="polite"><span id="storageStatus" title="Automatische lokale Sicherung aktiv">✓ Gespeichert</span></div>
+  </div>
+  <input type="file" id="importFile" accept=".json,application/json" style="display:none" onchange="importJSON(event)">
+</div>
 <table id="scoreTable"><thead><tr id="headerRow"><th>Kategorie</th></tr></thead><tbody id="scoreBody"></tbody></table>
 <div id="bonusInfo"></div><div id="highscores" role="dialog" aria-modal="true" aria-label="Highscores" style="display:none"><div class="highscorePanel"><button class="highscoreClose" onclick="toggleHighscores(false)" aria-label="Highscores schließen">✕</button><h3>🏆 Bestleistungen</h3><div id="highscoreMode"></div><div id="highscoreList"></div><button onclick="toggleHighscores(false)">Schließen</button></div></div>
 <div id="kniffelShow"><div id="kniffelText">KNIFFEL!</div><div id="fireworkTip" style="position:relative;z-index:3;margin-top:16px;font-size:19px;color:#fff"></div></div>
@@ -344,7 +485,7 @@ const extreme=[
  {id:'small',label:'Kleine Straße',values:fixed(30)},
  {id:'large',label:'Große Straße',values:fixed(40)},
  {id:'highway',label:'Highway',values:fixed(50)},
- {id:'kniffel',label:'Kniffel (5 gleiche)',values:nums(0,500,50)},
+ {id:'kniffel',label:'Kniffel (5 gleiche)',values:fixed(50)},
  {id:'extreme',label:'Kniffel Extrem (6 gleiche)',values:[0,...nums(75,1075,100)]},
  {id:'low',label:'10 oder weniger',values:fixed(40)},
  {id:'high',label:'33 oder mehr',values:fixed(40)},
@@ -360,16 +501,46 @@ const ruleHints={
 function ruleFor(id,mode){return ruleHints[mode][id]||'';}
 const diceFaces=['','⚀','⚁','⚂','⚃','⚄','⚅'];
 
-const APP_VERSION=47;
+const APP_VERSION=61;
 document.title='Kniffel Dual v'+APP_VERSION;
 document.getElementById('appHeading').textContent='Kniffelblock Dual v'+APP_VERSION;
 const tableBody=document.getElementById('scoreBody'),headerRow=document.getElementById('headerRow'),contextMenu=document.getElementById('contextMenu');
 let state, currentCell=null, warningTimer=null, effectTimer=null;
 let pending=null; // {type:'bonus'|'joker',i}; gespeichert in state.pending
 function fresh(mode='classic',count=4,names=[]){return {version:APP_VERSION,mode,playerCount:count,players:Array.from({length:count},(_,i)=>({name:names[i]||'Spieler '+(i+1),values:{},extra:0})),activePlayer:0,started:new Date().toISOString(),saved:false,pending:null,highscores:{classic:[],extreme:[]}}}
-function load(){try{const raw=localStorage.getItem(KEY);if(raw){const x=JSON.parse(raw);if(valid(x))return x}}catch(e){}return fresh()}
-function valid(x){return x&&([30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47].includes(x.version))&&defs[x.mode]&&Number.isInteger(x.playerCount)&&x.playerCount>=1&&x.playerCount<=8&&Array.isArray(x.players)&&x.players.length===x.playerCount&&x.players.every(p=>p&&typeof p.name==='string'&&p.values&&typeof p.values==='object'&&Number.isInteger(p.extra)&&p.extra>=0)&&(x.pending==null||(Number.isInteger(x.pending.i)&&x.pending.i>=0&&x.pending.i<x.playerCount&&['bonus','joker'].includes(x.pending.type)))&&x.highscores&&Array.isArray(x.highscores.classic)&&Array.isArray(x.highscores.extreme)}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(state));document.getElementById('storageStatus').textContent='Lokal gespeichert · '+new Date().toLocaleTimeString('de-DE')}catch(e){document.getElementById('storageStatus').textContent='⚠️ Lokale Speicherung nicht verfügbar – JSON sichern!'}}
+const DUAL_KEY='kniffelDualSeparateV56';
+let dualStore=null;
+function cleanSlot(x,mode){return x&&valid(x)&&x.mode===mode?x:null}
+function makeDualFromLegacy(x){
+ const primary=x&&valid(x)?x:fresh();
+ const other=primary.mode==='classic'?'extreme':'classic';
+ const names=primary.players.map(p=>p.name);
+ return {version:APP_VERSION,activeMode:primary.mode,slots:{classic:primary.mode==='classic'?primary:fresh('classic',primary.playerCount,names),extreme:primary.mode==='extreme'?primary:fresh('extreme',primary.playerCount,names)},highscores:primary.highscores};
+}
+function normalizeDual(d){
+ if(!d||!d.slots)return null;
+ const c=cleanSlot(d.slots.classic,'classic'),e=cleanSlot(d.slots.extreme,'extreme');
+ if(!c||!e)return null;
+ const hs=d.highscores&&Array.isArray(d.highscores.classic)&&Array.isArray(d.highscores.extreme)?d.highscores:c.highscores;
+ return {version:APP_VERSION,activeMode:d.activeMode==='extreme'?'extreme':'classic',slots:{classic:c,extreme:e},highscores:hs};
+}
+function load(){
+ try{const d=normalizeDual(JSON.parse(localStorage.getItem(DUAL_KEY)||'null'));if(d){dualStore=d;return d.slots[d.activeMode]}}catch(e){}
+ let legacy=null;try{legacy=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){}
+ dualStore=makeDualFromLegacy(legacy);return dualStore.slots[dualStore.activeMode];
+}
+function valid(x){return x&&([30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61].includes(x.version))&&defs[x.mode]&&Number.isInteger(x.playerCount)&&x.playerCount>=1&&x.playerCount<=8&&Array.isArray(x.players)&&x.players.length===x.playerCount&&x.players.every(p=>p&&typeof p.name==='string'&&p.values&&typeof p.values==='object'&&Number.isInteger(p.extra)&&p.extra>=0)&&(x.pending==null||(Number.isInteger(x.pending.i)&&x.pending.i>=0&&x.pending.i<x.playerCount&&['bonus','joker'].includes(x.pending.type)))&&x.highscores&&Array.isArray(x.highscores.classic)&&Array.isArray(x.highscores.extreme)}
+function setStorageStatus(shortText,detail,isError=false){const el=document.getElementById('storageStatus');el.textContent=shortText;el.title=detail;el.classList.toggle('storageError',isError);}
+function save(){
+ try{
+  if(!dualStore)dualStore=makeDualFromLegacy(state);
+  dualStore.slots[state.mode]=state;dualStore.activeMode=state.mode;
+  dualStore.highscores=state.highscores;
+  for(const mode of ['classic','extreme'])dualStore.slots[mode].highscores=dualStore.highscores;
+  localStorage.setItem(DUAL_KEY,JSON.stringify(dualStore));
+  setStorageStatus('✓ '+new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}),'Beide Modi lokal gespeichert');
+ }catch(e){setStorageStatus('⚠ Speicherfehler','Lokale Speicherung nicht verfügbar – JSON sichern!',true)}
+}
 function getName(i){return state.players[i].name.trim()||'Spieler '+(i+1)}
 function sumFor(p){const v=p.values;let top=0,bottom=0;for(let n=1;n<=6;n++)top+=Number(v[n])||0;for(const cat of defs[state.mode].cats){if(!nums(1,6).map(String).includes(cat.id))bottom+=Number(v[cat.id])||0}const bonus=top>=defs[state.mode].threshold?defs[state.mode].bonus:0;return {top,bottom,bonus,total:top+bottom+bonus}}
 function buildTable(){
@@ -377,13 +548,25 @@ function buildTable(){
  for(let i=0;i<state.playerCount;i++){
   const th=document.createElement('th'),wrap=document.createElement('div');wrap.className='playerHead';
   const inp=document.createElement('input');inp.className='nameInput';inp.value=state.players[i].name;inp.setAttribute('aria-label','Spielername '+(i+1));
-  inp.addEventListener('input',()=>{state.players[i].name=inp.value;save();setGameInfo()});
-  const ctr=document.createElement('div');ctr.className='turnCounter';wrap.append(inp,ctr);th.appendChild(wrap);
+  inp.readOnly=true;inp.tabIndex=-1;
+  inp.addEventListener('click',()=>{const old=state.players[i].name;const next=prompt('Spielername ändern:',old);if(next!==null){state.players[i].name=next.trim()||old;save();buildTable();}});
+
+  const ctr=document.createElement('div');ctr.className='turnCounter';const rankIcon=document.createElement('span');rankIcon.className='liveRankIcon';rankIcon.setAttribute('aria-hidden','true');wrap.append(inp,ctr,rankIcon);th.appendChild(wrap);
   // Schmale Drag-Fläche als Überlagerung: keine zusätzliche Zeilenhöhe.
-  const grip=document.createElement('span');grip.className='playerDragGrip';grip.textContent='⠿';grip.title='Spielerspalte ziehen (oder mit Pfeiltasten verschieben)';grip.setAttribute('role','button');grip.setAttribute('tabindex','0');grip.setAttribute('aria-label',getName(i)+' verschieben');
-  grip.addEventListener('pointerdown',e=>beginPlayerDrag(e,i,grip));
+  const grip=document.createElement('span');grip.className='playerDragGrip';grip.textContent='⠿';grip.title='Spielerkopf gedrückt halten und ziehen (oder Pfeiltasten)';grip.setAttribute('role','button');grip.setAttribute('tabindex','0');grip.setAttribute('aria-label',getName(i)+' verschieben');
+  // Der große, sichtbare Griff liegt auf dem Fortschrittsstreifen (z.B. 22/22).
+  // Touch startet ausschließlich hier, damit der Browser nicht den Namen markiert.
+  ctr.classList.add('playerDragZone');
+  ctr.title='↔ Spieler-Spalte hier anfassen und ziehen';
+  ctr.setAttribute('role','button');ctr.setAttribute('aria-label',getName(i)+' Spalte verschieben');
+  ctr.setAttribute('tabindex','0');
+  ctr.addEventListener('contextmenu',e=>e.preventDefault());
+  ctr.addEventListener('touchstart',e=>e.preventDefault(),{passive:false});
+  ctr.addEventListener('pointerdown',e=>{if(e.button!==undefined&&e.button!==0)return;e.preventDefault();e.stopPropagation();beginPlayerDrag(e,i,ctr)});
+  ctr.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();movePlayer(i,Math.max(0,Math.min(state.playerCount-1,i+(e.key==='ArrowLeft'?-1:1))))}});
+
   grip.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();movePlayer(i,Math.max(0,Math.min(state.playerCount-1,i+(e.key==='ArrowLeft'?-1:1))))}});
-  th.appendChild(grip);headerRow.appendChild(th);
+  headerRow.appendChild(th);
  }
  tableBody.replaceChildren();
  function row(label,id,section,kind){const tr=document.createElement('tr');tr.className=(kind?'sumRow ':'')+(section==='top'?'score-top':'score-bottom');const title=document.createElement('td');title.className='section-title';const line=document.createElement('div');line.className='cat-line';const titleName=document.createElement('span');titleName.className='cat-name';titleName.textContent=/^[1-6]$/.test(id)?id+'er':label;line.appendChild(titleName);if(!kind){const hint=document.createElement('span');hint.className=/^[1-6]$/.test(id)?'cat-dice':'cat-rule';hint.textContent=/^[1-6]$/.test(id)?diceFaces[Number(id)].repeat(3):ruleFor(id,state.mode);line.appendChild(hint)}title.appendChild(line);
@@ -415,38 +598,81 @@ function movePlayer(from,to){
  state.players.splice(from,1);state.players.splice(to,0,p);
  state.activePlayer=state.players.indexOf(active);
  if(state.pending&&pendingPlayer)state.pending.i=state.players.indexOf(pendingPlayer);
- contextMenu.style.display='none';currentCell=null;
+ closeScoreMenu();currentCell=null;
  save();buildTable();resumePending();
 }
-function beginPlayerDrag(e,from,grip){
+
+// v58: Direkte Fingerbewegung über den GESAMTEN Spielerkopf.
+// Während des Ziehens folgt eine schwebende Kopie der vollständigen Spalte
+// dem Finger in X und Y. Die eigentliche Tabelle bleibt bis zum Loslassen stabil.
+function installWholeHeaderDrag(th,index){
+ th.addEventListener('pointerdown',e=>{
+  if(e.button!==undefined&&e.button!==0)return;
+  e.preventDefault();
+  beginPlayerDrag(e,index,th);
+ });
+}
+function beginPlayerDrag(e,from,head){
  if(e.button!==undefined&&e.button!==0)return;
- e.preventDefault();e.stopPropagation();
- const startX=e.clientX,startY=e.clientY;
- let destination=from;
- grip.setPointerCapture(e.pointerId);
- grip.classList.add('dragging');
- const move=ev=>{
-  if(ev.pointerId!==e.pointerId)return;
+ const pointerId=e.pointerId, startX=e.clientX,startY=e.clientY;
+ let moved=false,destination=from,ghost=null;
+ const cells=()=>[headerRow.children[from+1], ...[...tableBody.rows].map(r=>r.children[from+1])];
+ const originals=cells();
+ const makeGhost=()=>{
+  const bounds=originals.map(el=>el.getBoundingClientRect());
+  const width=bounds[0].width;
+  ghost=document.createElement('div');ghost.className='columnDragGhost';
+  ghost.style.width=width+'px';ghost.style.left=bounds[0].left+'px';ghost.style.top=bounds[0].top+'px';
+  const table=document.createElement('table');table.className='dragGhostTable';
+  for(let j=0;j<originals.length;j++){
+   const tr=document.createElement('tr'),td=document.createElement('td');
+   td.style.height=bounds[j].height+'px';td.style.width=width+'px';
+   td.textContent=originals[j].querySelector('.nameInput')?.value||originals[j].innerText||'';
+   if(j===0)td.className='ghostHead';
+   tr.appendChild(td);table.appendChild(tr);
+  }
+  ghost.appendChild(table);document.body.appendChild(ghost);
+  originals.forEach(el=>el.classList.add('columnDragSource'));
+  head.classList.add('dragging');
+ };
+ const targetAt=x=>{
   const heads=[...headerRow.children].slice(1);
-  const x=ev.clientX;
   let best=from,dist=Infinity;
-  heads.forEach((th,j)=>{const r=th.getBoundingClientRect();const d=Math.abs(x-(r.left+r.right)/2);if(d<dist){dist=d;best=j}});
-  destination=best;
-  heads.forEach((th,j)=>th.classList.toggle('dragDestination',j===best&&best!==from));
+  heads.forEach((el,j)=>{const r=el.getBoundingClientRect();const d=Math.abs(x-(r.left+r.right)/2);if(d<dist){dist=d;best=j}});
+  return best;
+ };
+ const move=ev=>{
+  if(ev.pointerId!==pointerId)return;
+  const dx=ev.clientX-startX,dy=ev.clientY-startY;
+  if(!moved&&Math.hypot(dx,dy)<7)return;
+  if(!moved){moved=true;makeGhost();}
+  ev.preventDefault();
+  ghost.style.transform=`translate3d(${dx}px,${dy}px,0)`;
+  destination=targetAt(ev.clientX);
+  [...headerRow.children].slice(1).forEach((el,j)=>el.classList.toggle('dragDestination',j===destination&&j!==from));
+ };
+ const cleanup=()=>{
+  head.removeEventListener('pointermove',move);
+  head.removeEventListener('pointerup',end);
+  head.removeEventListener('pointercancel',cancel);
+  if(ghost)ghost.remove();
+  originals.forEach(el=>el.classList.remove('columnDragSource'));
+  head.classList.remove('dragging');
+  [...headerRow.children].forEach(el=>el.classList.remove('dragDestination'));
+  try{head.releasePointerCapture(pointerId)}catch(_){}
  };
  const end=ev=>{
-  if(ev.pointerId!==e.pointerId)return;
-  grip.removeEventListener('pointermove',move);
-  grip.removeEventListener('pointerup',end);
-  grip.removeEventListener('pointercancel',cancel);
-  grip.classList.remove('dragging');
-  [...headerRow.children].forEach(th=>th.classList.remove('dragDestination'));
-  if(destination!==from&&Math.hypot(ev.clientX-startX,ev.clientY-startY)>8)movePlayer(from,destination);
+  if(ev.pointerId!==pointerId)return;
+  const shouldMove=moved&&destination!==from;
+  cleanup();
+  if(shouldMove)movePlayer(from,destination);
+
  };
- const cancel=()=>{grip.removeEventListener('pointermove',move);grip.removeEventListener('pointerup',end);grip.removeEventListener('pointercancel',cancel);grip.classList.remove('dragging');[...headerRow.children].forEach(th=>th.classList.remove('dragDestination'))};
- grip.addEventListener('pointermove',move);
- grip.addEventListener('pointerup',end);
- grip.addEventListener('pointercancel',cancel);
+ const cancel=ev=>{if(ev.pointerId!==pointerId)return;cleanup()};
+ try{head.setPointerCapture(pointerId)}catch(_){}
+ head.addEventListener('pointermove',move);
+ head.addEventListener('pointerup',end);
+ head.addEventListener('pointercancel',cancel);
 }
 function liveRankings(){
  const scores=state.players.map(p=>sumFor(p).total);
@@ -454,23 +680,61 @@ function liveRankings(){
  if(!hasEntries||state.playerCount<2)return scores.map(()=> '');
  const unique=[...new Set(scores)].sort((a,b)=>b-a);
  return scores.map(score=>{const rank=unique.indexOf(score)+1;
-  if(rank===1)return '🥇';if(rank===2)return '🥈';if(rank===3)return '🥉';
-  if(score===unique[unique.length-1])return '🙈';return '·'+rank;
+  // Der letzte Platz hat Vorrang vor Silber/Bronze – auch bei zwei Spielern.
+  // Bei komplettem Gleichstand gibt es noch keinen eindeutigen Verlierer.
+  if(unique.length>1&&score===unique[unique.length-1])return 'jester';
+  if(rank===1)return 'crown';if(rank===2)return 'silver';if(rank===3)return 'bronze';
+  return '·'+rank;
  });
+}
+const JESTER_HAT_SVG='<svg viewBox="0 0 100 88" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14 62 Q-1 28 11 9 Q18 27 37 33 Q42 6 50 4 Q62 14 62 33 Q86 7 91 18 Q98 41 83 62 Z" fill="#8b23b5" stroke="#200a38" stroke-width="4" stroke-linejoin="round"/><path d="M14 62 Q3 29 11 9 Q19 31 39 38 L44 62Z" fill="#f02e72"/><path d="M43 62 Q42 18 50 4 Q62 19 62 62Z" fill="#ffd433"/><path d="M63 62 Q84 10 91 18 Q97 44 83 62Z" fill="#25c8a4"/><path d="M8 58 Q49 49 91 58 L87 75 Q50 85 12 75 Z" fill="#7b17ad" stroke="#23083c" stroke-width="4"/><circle cx="11" cy="9" r="8" fill="#ffe45c" stroke="#9b6200" stroke-width="2"/><circle cx="50" cy="4" r="7" fill="#00d5e5" stroke="#00717c" stroke-width="2"/><circle cx="91" cy="18" r="8" fill="#ffdc41" stroke="#9b6200" stroke-width="2"/><path d="M7 7l8 5M46 2l8 5M87 16l8 5" stroke="#fff6c6" stroke-width="2"/></svg>';
+function setRankIcon(el,rank){
+ el.className='liveRankIcon';el.textContent='';el.innerHTML='';
+ if(!rank)return;
+ el.classList.add('rank-'+rank.replace(/[^a-z0-9]/gi,''));
+ if(rank==='jester'){el.innerHTML=JESTER_HAT_SVG;el.setAttribute('title','Letzter Platz – Narrenkappe');}
+ else if(rank==='crown'){el.textContent='👑';el.setAttribute('title','1. Platz – Krone');}
+ else if(rank==='silver'){el.textContent='🥈';el.setAttribute('title','2. Platz');}
+ else if(rank==='bronze'){el.textContent='🥉';el.setAttribute('title','3. Platz');}
+ else {el.textContent=rank;el.setAttribute('title','Platz '+rank.replace('·',''));}
 }
 function updateAll(){const medals=liveRankings();for(let i=0;i<state.playerCount;i++){
  const p=state.players[i],s=sumFor(p),count=defs[state.mode].cats.filter(c=>Object.hasOwn(p.values,c.id)).length;
- const th=headerRow.children[i+1];th.classList.toggle('activePlayer',i===state.activePlayer);th.querySelector('.turnCounter').textContent=(medals[i]?medals[i]+' ':'')+count+'/'+defs[state.mode].cats.length;th.querySelector('.turnCounter').classList.toggle('done',count===defs[state.mode].cats.length);
+ const th=headerRow.children[i+1];th.classList.toggle('activePlayer',i===state.activePlayer);th.querySelector('.turnCounter').textContent=count+'/'+defs[state.mode].cats.length;setRankIcon(th.querySelector('.liveRankIcon'),medals[i]);th.querySelector('.turnCounter').classList.toggle('done',count===defs[state.mode].cats.length);
  for(const td of tableBody.querySelectorAll('td[data-player="'+i+'"]')){const id=td.dataset.id;const calc={sumTop:s.top,bonus:s.bonus?'+'+s.bonus+' Bonus':'Fehlt '+(defs[state.mode].threshold-s.top),topTotal:s.top+s.bonus,sumBottom:s.bottom,grand:s.total};const val=Object.hasOwn(calc,id)?calc[id]:p.values[id];td.textContent=val===undefined?'':(!Object.hasOwn(calc,id)&&val===0?'／':String(val));td.classList.toggle('filled',!Object.hasOwn(calc,id)&&val!==undefined);td.classList.toggle('currentPlayerColumn',i===state.activePlayer);if(id==='bonus')td.style.color=s.bonus?'#0f0':'#ccc'}
  th.querySelector('.nameInput').style.borderBottom=s.total>0&&s.total===Math.max(...state.players.map(p=>sumFor(p).total))?'2px solid #ffcc66':'1px solid #555';
  }setGameInfo();document.getElementById('bonusInfo').textContent=state.mode==='extreme'?'Extrem: 5 Würfel (1–6) + 1 Würfel (0–9) · '+defs.extreme.cats.length+' Felder · Weitere Kniffel Extrem: je +100 im selben Feld':'';}
 function setGameInfo(){const d=new Date(state.started);document.getElementById('gameInfo').textContent='Spiel gestartet am '+d.toLocaleDateString('de-DE')+' – '+d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})+' • Aktuell: '+getName(state.activePlayer)}
+function clearEntryCross(){
+ document.querySelectorAll('#scoreTable .entryCrossRow').forEach(el=>el.classList.remove('entryCrossRow'));
+ document.querySelectorAll('#scoreTable .entryCrossColumn').forEach(el=>el.classList.remove('entryCrossColumn'));
+ document.querySelectorAll('#scoreTable .entryCrossHeader').forEach(el=>el.classList.remove('entryCrossHeader'));
+ document.querySelectorAll('#scoreTable .entryZoomCategory').forEach(el=>{el.classList.remove('entryZoomCategory');el.removeAttribute('data-zoom-label')});
+}
+function closeScoreMenu(){contextMenu.style.display='none';clearEntryCross()}
+function showEntryCross(id,i){
+ clearEntryCross();const cell=[...tableBody.querySelectorAll('td[data-player]')].find(td=>td.dataset.player===String(i)&&td.dataset.id===id);
+ if(!cell)return;
+ cell.parentElement.classList.add('entryCrossRow');
+ const categoryCell=cell.parentElement.querySelector('td.section-title');
+ const category=defs[state.mode].cats.find(c=>c.id===id);
+ if(categoryCell&&category){categoryCell.dataset.zoomLabel=category.label;categoryCell.classList.add('entryZoomCategory')}
+ tableBody.querySelectorAll('td[data-player="'+i+'"]').forEach(td=>td.classList.add('entryCrossColumn'));
+ headerRow.children[i+1]?.classList.add('entryCrossHeader');
+}
 function openContextMenu(e,id,i){e.stopPropagation();currentCell={id,i};contextMenu.replaceChildren();const cat=defs[state.mode].cats.find(c=>c.id===id);
- if(state.pending?.type==='bonus'){alert('Bitte zuerst den Bonuswurf beantworten.');return}
+ if(state.pending?.type==='bonus'){closeScoreMenu();alert('Bitte zuerst den Bonuswurf beantworten.');return}
+ const categoryZoom=document.createElement('div');
+ categoryZoom.className='categoryZoomLabel';
+ const categoryName=document.createElement('strong');categoryName.textContent=cat.label||cat.name||id;
+ categoryZoom.appendChild(categoryName);
+ const categoryHint=document.createElement('span');categoryHint.textContent='Für '+getName(i);
+ categoryZoom.appendChild(categoryHint);
+ contextMenu.appendChild(categoryZoom);
  const add=(label,fn,cls)=>{const b=document.createElement('button');b.textContent=label;if(cls)b.className=cls;b.addEventListener('click',ev=>{ev.stopPropagation();fn()});contextMenu.appendChild(b)};
  for(const v of cat.values){if(state.pending?.type==='joker'&&(i!==state.pending.i||Object.hasOwn(state.players[i].values,id)||id==='kniffel'||id==='extreme'))continue;add(v===0?'／ Streichen (0 Punkte)':String(v),()=>selectValue(v))}
  add('❌ Feld löschen',()=>clearValue(),'deleteBtn');
- contextMenu.style.display='block';contextMenu.style.maxHeight='none';const header=headerRow.children[i+1].getBoundingClientRect();const menuWidth=contextMenu.getBoundingClientRect().width;let top=Math.max(7,header.bottom+5);const visual=window.visualViewport;const viewHeight=visual?visual.height:window.innerHeight;const viewTop=visual?visual.offsetTop:0;const bottom=viewTop+viewHeight;let avail=bottom-top-8;if(avail<95){top=viewTop+7;avail=bottom-top-8}const one=contextMenu.querySelector('button');const bh=one?one.getBoundingClientRect().height:42;contextMenu.style.maxHeight=Math.max(60,Math.min(bh*8+2,avail))+'px';contextMenu.style.top=top+'px';contextMenu.style.left=Math.max(5,Math.min(header.left,window.innerWidth-menuWidth-6))+'px';contextMenu.scrollTop=0;
+ showEntryCross(id,i);contextMenu.style.display='block';contextMenu.style.maxHeight='none';const header=headerRow.children[i+1].getBoundingClientRect();const menuWidth=contextMenu.getBoundingClientRect().width;let top=Math.max(7,header.bottom+5);const visual=window.visualViewport;const viewHeight=visual?visual.height:window.innerHeight;const viewTop=visual?visual.offsetTop:0;const bottom=viewTop+viewHeight;let avail=bottom-top-8;if(avail<95){top=viewTop+7;avail=bottom-top-8}const one=contextMenu.querySelector('button');const bh=one?one.getBoundingClientRect().height:42;contextMenu.style.maxHeight=Math.max(60,Math.min(bh*8+2,avail))+'px';contextMenu.style.top=top+'px';contextMenu.style.left=Math.max(5,Math.min(header.left,window.innerWidth-menuWidth-6))+'px';contextMenu.scrollTop=0;
 }
 function showWarn(){const w=document.getElementById('warnOverlay');w.style.display='flex';clearTimeout(warningTimer);warningTimer=setTimeout(()=>w.style.display='none',1800)}
 function finishTurn(i){state.pending=null;state.activePlayer=(i+1)%state.playerCount;save();updateAll();if(isComplete()&&!state.saved)showWinners()}
@@ -478,7 +742,7 @@ function manualTurn(delta){
  const old=state.activePlayer,next=(old+delta+state.playerCount)%state.playerCount;
  if(!confirm('Manuell von '+getName(old)+' zu '+getName(next)+' wechseln?'+(state.pending?'\nEin offener Bonus-/Jokerzug wird dabei abgebrochen.':'')))return;
  clearTimeout(bonusQuestionTimer);state.pending=null;document.getElementById('bonusQuestion').style.display='none';document.getElementById('jokerHint').style.display='none';
- state.activePlayer=next;contextMenu.style.display='none';save();updateAll();
+ state.activePlayer=next;closeScoreMenu();save();updateAll();
 }
 function isCorrection(id,i){return i!==state.activePlayer||Object.hasOwn(state.players[i].values,id)}
 function confirmEdit(id,i){
@@ -503,7 +767,7 @@ function resumePending(){document.getElementById('bonusQuestion').style.display=
 function selectValue(v){
  if(!currentCell)return;
  const {id,i}=currentCell,player=state.players[i],old=player.values[id];
- contextMenu.style.display='none';
+ closeScoreMenu();
  if(state.pending){
   if(state.pending.type==='bonus'){alert('Bitte zuerst den Bonuswurf mit Ja oder Nein beantworten.');return}
   if(i!==state.pending.i||Object.hasOwn(player.values,id)||id==='extreme'||id==='kniffel'){
@@ -541,19 +805,52 @@ function selectValue(v){
  finishTurn(i);
 }
 let bonusQuestionTimer=null;
-function clearValue(){if(!currentCell)return;const {id,i}=currentCell;if(state.pending){alert('Bitte zuerst den laufenden Bonus-/Jokerzug abschließen.');return}if(!confirm('Feld von '+getName(i)+' wirklich löschen? Der aktive Spieler bleibt unverändert.'))return;state.saved=false;delete state.players[i].values[id];contextMenu.style.display='none';save();updateAll()}
+function clearValue(){if(!currentCell)return;const {id,i}=currentCell;if(state.pending){alert('Bitte zuerst den laufenden Bonus-/Jokerzug abschließen.');return}if(!confirm('Feld von '+getName(i)+' wirklich löschen? Der aktive Spieler bleibt unverändert.'))return;state.saved=false;delete state.players[i].values[id];closeScoreMenu();save();updateAll()}
 function isComplete(){return state.players.every(p=>defs[state.mode].cats.every(c=>Object.hasOwn(p.values,c.id)))}
 function results(){return state.players.map(p=>({name:p.name.trim()||'Spieler',score:sumFor(p).total})).sort((a,b)=>b.score-a.score)}
 function showWinners(){const res=results();const box=document.getElementById('winnerText');box.replaceChildren();res.forEach((r,i)=>{const div=document.createElement('div');div.textContent=(i&&r.score===res[i-1].score?'=':i+1)+'. '+r.name+' – '+r.score+' Punkte';box.appendChild(div)});document.getElementById('winnerOverlay').style.display='flex';launchWinnerFireworks();if(!state.saved){const date=new Date().toLocaleDateString('de-DE');res.forEach(r=>state.highscores[state.mode].push({...r,date}));state.saved=true;save()}}
 function endGame(){if(confirm('Spiel beenden und Ergebnis speichern?'))showWinners()}
 function resetGame(){if(!confirm('Neues Spiel beginnen? Der aktuelle Spielstand wird zurückgesetzt. Bitte bei Bedarf vorher JSON sichern.'))return;const names=state.players.map(p=>p.name),highscores=state.highscores,mode=state.mode,count=state.playerCount;state=fresh(mode,count,names);state.highscores=highscores;save();buildTable();resumePending()}
-function switchMode(mode){if(mode===state.mode)return;if(Object.values(state.players).some(p=>Object.keys(p.values).length||p.extra)&&!confirm('Spielmodus wechseln? Der laufende Spielstand wird ersetzt. Vorher gegebenenfalls JSON sichern.'))return;const names=state.players.map(p=>p.name),hs=state.highscores;state=fresh(mode,state.playerCount,names);state.highscores=hs;save();buildTable();resumePending()}
+function switchMode(mode){
+ if(mode===state.mode||!defs[mode])return;
+ closeScoreMenu();toggleHighscores(false);
+ save();
+ state=dualStore.slots[mode];
+ state.highscores=dualStore.highscores;
+ save();buildTable();resumePending();
+}
 function changePlayers(delta){const count=Math.min(8,Math.max(1,state.playerCount+delta));if(count===state.playerCount)return;if(state.players.some(p=>Object.keys(p.values).length||p.extra)&&!confirm('Spieleranzahl ändern? Laufende Einträge werden zurückgesetzt.'))return;const names=state.players.map(p=>p.name),hs=state.highscores;state=fresh(state.mode,count,names);state.highscores=hs;save();buildTable();resumePending()}
 function toggleHighscores(force){const box=document.getElementById('highscores');const opening=typeof force==='boolean'?force:box.style.display==='none';box.style.display=opening?'flex':'none';if(opening)renderHighscores()}
 function renderHighscores(){const list=document.getElementById('highscoreList');document.getElementById('highscoreMode').textContent=state.mode==='classic'?'🎲 Klassisch':'🎲 Kniffel Extrem';list.replaceChildren();const data=[...state.highscores[state.mode]].sort((a,b)=>b.score-a.score).slice(0,50);if(!data.length){list.textContent='Noch keine Einträge.';return}data.forEach((e,i)=>{const line=document.createElement('div');line.textContent=(i+1)+'. '+e.name+' – '+e.score+' ('+e.date+')';list.appendChild(line)})}
 function resetHighscores(){if(!confirm('Highscores für '+(state.mode==='classic'?'Klassisch':'Extrem')+' löschen?'))return;state.highscores[state.mode]=[];save();renderHighscores()}
-function exportJSON(){const blob=new Blob([JSON.stringify({format:'kniffel-dual-v'+APP_VERSION,exported:new Date().toISOString(),state},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Kniffel-Spielstand-'+state.mode+'-'+new Date().toLocaleString('sv-SE',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).replace(' ','_').replace(/:/g,'-')+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);document.getElementById('storageStatus').textContent='JSON heruntergeladen – in OneDrive speichern'}
-async function importJSON(e){const file=e.target.files[0];if(!file)return;try{const obj=JSON.parse(await file.text());const x=(obj.format==='kniffel-dual-v30'||obj.format==='kniffel-dual-v31'||obj.format==='kniffel-dual-v32'||obj.format==='kniffel-dual-v33'||obj.format==='kniffel-dual-v34'||obj.format==='kniffel-dual-v35'||obj.format==='kniffel-dual-v36'||obj.format==='kniffel-dual-v37'||obj.format==='kniffel-dual-v38'||obj.format==='kniffel-dual-v39'||obj.format==='kniffel-dual-v40'||obj.format==='kniffel-dual-v41'||obj.format==='kniffel-dual-v42'||obj.format==='kniffel-dual-v43'||obj.format==='kniffel-dual-v44'||obj.format==='kniffel-dual-v45'||obj.format==='kniffel-dual-v46'||obj.format==='kniffel-dual-v47')?obj.state:obj;if(!valid(x))throw Error('Unbekanntes oder ungültiges Format');if(!confirm('Gespeicherten Spielstand laden? Der aktuelle lokale Stand wird ersetzt.'))return;state=x;save();buildTable();resumePending();document.getElementById('storageStatus').textContent='JSON geladen: '+file.name}catch(err){alert('JSON konnte nicht geladen werden: '+err.message)}finally{e.target.value=''}}
+function exportJSON(){
+ save();
+ const blob=new Blob([JSON.stringify({format:'kniffel-dual-v58',exported:new Date().toISOString(),dual:dualStore},null,2)],{type:'application/json'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+ a.download='Kniffel-BEIDE-Spielstaende-'+new Date().toLocaleString('sv-SE',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).replace(' ','_').replace(/:/g,'-')+'.json';
+ document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+ setStorageStatus('✓ JSON gesichert','Beide Modi als JSON heruntergeladen – in OneDrive speichern');
+}
+async function importJSON(e){
+ const file=e.target.files[0];if(!file)return;
+ try{
+  const obj=JSON.parse(await file.text());
+  let incoming=null;
+  if((obj.format==='kniffel-dual-v56'||obj.format==='kniffel-dual-v57'||obj.format==='kniffel-dual-v58'||obj.format==='kniffel-dual-v59'||obj.format==='kniffel-dual-v60'||obj.format==='kniffel-dual-v61')&&obj.dual)incoming=normalizeDual(obj.dual);
+  if(!incoming){const x=obj.state||obj;if(valid(x)){
+   // Ältere Einzelspielstand-Dateien nur in den passenden Modus importieren.
+   incoming=normalizeDual(JSON.parse(JSON.stringify(dualStore)));
+   incoming.slots[x.mode]=x;
+   incoming.activeMode=x.mode;
+   incoming.highscores={classic:[...incoming.highscores.classic],extreme:[...incoming.highscores.extreme]};
+   incoming.highscores[x.mode]=[...x.highscores[x.mode]];
+  }}
+  if(!incoming)throw Error('Unbekanntes oder ungültiges Format');
+  if(!confirm('JSON-Spielstände laden? Die betroffenen lokalen Spielstände werden ersetzt.'))return;
+  closeScoreMenu();dualStore=incoming;state=dualStore.slots[dualStore.activeMode];state.highscores=dualStore.highscores;
+  save();buildTable();resumePending();setStorageStatus('✓ JSON geladen','JSON geladen: '+file.name);
+ }catch(err){alert('JSON konnte nicht geladen werden: '+err.message)}finally{e.target.value=''}
+}
 // Unterschiedliche Effektstufen: klassisch = bewährter Effekt, Extrem = Mega-Feuerwerk.
 let fireworkTimers=[];
 function clearFireworkTimers(){for(const t of fireworkTimers)clearTimeout(t);fireworkTimers=[];}
@@ -600,7 +897,14 @@ function launchWinnerFireworks(){
   fireworkTimers.push(t);
  }
 }
-document.addEventListener('click',()=>contextMenu.style.display='none');window.addEventListener('resize',()=>contextMenu.style.display='none');document.addEventListener('keydown',e=>{if(e.key==='Escape')contextMenu.style.display='none'});
-state=load();if(state.players.some(p=>p.extra>0)){for(const p of state.players){if(p.extra&&p.values.extreme===75)p.values.extreme+=100*p.extra;p.extra=0}}buildTable();resumePending();
+// v49: Der erste Tipp außerhalb des offenen Punktemenüs schließt nur die Auswahl.
+// Er darf weder eine andere Zelle öffnen noch einen Button darunter auslösen.
+document.addEventListener('click',e=>{
+ if(contextMenu.style.display!=='block'||contextMenu.contains(e.target))return;
+ e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();closeScoreMenu();
+},true);
+window.addEventListener('resize',closeScoreMenu);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeScoreMenu()});
+state=load();save();if(state.players.some(p=>p.extra>0)){for(const p of state.players){if(p.extra&&p.values.extreme===75)p.values.extreme+=100*p.extra;p.extra=0}}buildTable();resumePending();
 
 </script></body></html>
